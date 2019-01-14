@@ -1,66 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
-  <meta name="format-detection" content="telephone=no"/>
-  <meta name="format-detection" content="email=no"/>
-  <title>carema</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>camera测试</title>
   <link rel="stylesheet" href="./css/app.css">
-  <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
 </head>
-<body>
-<div class="booth">
-  <!--获取摄像头-->
-  <!--<input type="file" accept="image/*" capture="camera">-->
-  <!--获取摄像机-->
-  <!--<input type="file" accept="video/*" capture="camcorder">-->
-  <!--打开文件管理器-->
-  <!--<input type="file" accept="audio/*" capture="microphone">-->
+<body style="overflow: hidden">
 
-  <!--<input type="file" accept="image/*" capture="camera">-->
-
-  <!--video用于显示媒体设备的视频流，自动播放-->
-  <video id="video" class="video-class" autoplay style="width:100vw;height: 100vh">
-    <div></div>
-  </video>
-  <!--拍照按钮-->
-  <!--<div>
-    <button id="capture">拍照</button>
-  </div>-->
-  <!--描绘video截图-->
-  <!--<canvas id="canvas" width="480" height="320"></canvas>-->
+<div class="box-1">
+  <header style="height: 5vh;line-height: 5vh;color: white;">
+    <span>二维码/条码</span>
+  </header>
+  <div class="box-2"></div>
+  <footer></footer>
+</div>
+<div id="a" style="background: #000;">
+  <video id="video" autoplay style="background: #000;width: 100vw;height: 100vh"></video>
 </div>
 </body>
 <script>
+  
+    var a = document.getElementById("a");
     var video = document.getElementById("video");
-    var canvas = document.getElementById("canvas");
-    var context = canvas.getContext("2d");
-    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia){
+   /* console.log(document.documentElement.clientHeight );
+    console.log(document.documentElement.clientWidth);
+    video.style.height = document.documentElement.clientHeight + 'px';
+    video.style.width = document.documentElement.clientWidth + 'px';*/
+    // 判断摄像头并调用
+    if (navigator.mediaDevices.getUserMedia || navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
         //调用用户媒体设备，访问摄像头
-        getUserMedia({video:{width:480,height:320}},success,error);
+        getUserMedia({
+            video: {
+                facingMode: {exact: "environment"},
+                width: {min: 1920},
+                // height: {min: 400},
+            }
+        }, success, error);
     } else {
         alert("你的浏览器不支持访问用户媒体设备");
     }
 
     //访问用户媒体设备的兼容方法
-    function getUserMedia(constrains,success,error){
-        if(navigator.mediaDevices.getUserMedia){
+    function getUserMedia(constrains, success, error) {
+        if (navigator.mediaDevices.getUserMedia) {
             //最新标准API
             navigator.mediaDevices.getUserMedia(constrains)
                 .then(success)
                 .catch(error);
-        } else if (navigator.webkitGetUserMedia){
+        } else if (navigator.webkitGetUserMedia) {
             //webkit内核浏览器
             navigator.webkitGetUserMedia(constrains)
                 .then(success)
                 .catch(error);
-        } else if (navigator.mozGetUserMedia){
+        } else if (navigator.mozGetUserMedia) {
             //Firefox浏览器
             navagator.mozGetUserMedia(constrains)
                 .then(success)
                 .catch(error);
-        } else if (navigator.getUserMedia){
+        } else if (navigator.getUserMedia) {
             //旧版API
             navigator.getUserMedia(constrains)
                 .then(success)
@@ -69,7 +70,7 @@
     }
 
     //成功的回调函数
-    function success(stream){
+    function success(stream) {
         //兼容webkit内核浏览器
         var CompatibleURL = window.URL || window.webkitURL;
         //将视频流设置为video元素的源
@@ -79,15 +80,9 @@
     }
 
     //异常的回调函数
-    function error(error){
-        window.alert(error);
-        console.log("访问用户媒体设备失败：",error.name,error.message);
+    function error(error) {
+        // window.alert(error);
+        console.log("访问用户媒体设备失败：", error.name, error.message);
     }
-
-    //注册拍照按钮的单击事件
-    document.getElementById("capture").addEventListener("click",function(){
-        //绘制画面
-        context.drawImage(video,0,0,480,320);
-    });
 </script>
 </html>
