@@ -2,28 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="format-detection" content="email=no"/>
   <title>carema</title>
+  <link rel="stylesheet" href="./css/app.css">
   <script type="text/javascript" src="node_modules/jquery/dist/jquery.js"></script>
 </head>
 <body>
 <div class="booth">
   <!--获取摄像头-->
-  <input type="file" accept="image/*" capture="camera">
+  <!--<input type="file" accept="image/*" capture="camera">-->
   <!--获取摄像机-->
-  <input type="file" accept="video/*" capture="camcorder">
+  <!--<input type="file" accept="video/*" capture="camcorder">-->
   <!--打开文件管理器-->
-  <input type="file" accept="audio/*" capture="microphone">
+  <!--<input type="file" accept="audio/*" capture="microphone">-->
 
-  <input type="file" accept="image/*" capture="camera">
+  <!--<input type="file" accept="image/*" capture="camera">-->
 
   <!--video用于显示媒体设备的视频流，自动播放-->
-  <video id="video" autoplay style="width: 480px;height: 320px"></video>
+  <video id="video" class="video-class" autoplay style="width:100vw;height: 100vh">
+    <div></div>
+  </video>
   <!--拍照按钮-->
-  <div>
+  <!--<div>
     <button id="capture">拍照</button>
-  </div>
+  </div>-->
   <!--描绘video截图-->
-  <canvas id="canvas" width="480" height="320"></canvas>
+  <!--<canvas id="canvas" width="480" height="320"></canvas>-->
 </div>
 </body>
 <script>
